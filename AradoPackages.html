@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Packages</title>
+<style>
+    body {
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-image: linear-gradient(to bottom, #9b5de5, #1fd1f9);
+        color: white; 
+    }
+
+    h1 {
+        font-size: 100px; 
+        text-shadow: 2px 2px 4px rgba(180, 179, 179, 0.5);
+        font-family: 'Times New Roman', Times, serif; 
+        margin-bottom: 60px; 
+        animation: moveText 5s infinite;
+        position: relative;
+        display: inline-block;
+        color: #ffba00; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+    }
+
+    @keyframes moveText {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 150px; 
+    }
+
+    .column {
+        flex-basis: 30%;
+    }
+
+    .moviePackage {
+        border: 2px solid #ccc;
+        padding: 20px;
+        margin-bottom: 40px;
+        border-radius: 20px; 
+        background-color: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: box-shadow 0.3s ease;
+        transform: scale(1);
+    }
+
+    .moviePackage:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        transform: scale(1.05);
+    }
+
+    .movieTitle {
+        font-size: 60px;
+        margin-bottom: 20px;
+        color: #ffba00; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        font-family: 'Arial Rounded MT Bold'; 
+    }
+
+    .movieDetails {
+        font-size: 24px; 
+        margin-bottom: 10px; 
+        font-style: italic;
+    }
+
+    .buttonContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px; 
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin: 5px; 
+        font-size: 18px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    input[type="number"],
+    select {
+        display: none; 
+    }
+
+    #backButton {
+        position: fixed;
+        top: 20px; 
+        left: 20px; 
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 18px;
+    }
+
+    #backButton:hover {
+        background-color: #45a049;
+    }
+
+</style>
+<script>
+function reserveTickets(movieTitle, price) {
+    var numberOfTickets = prompt("How many tickets would you like to reserve for " + movieTitle + "?");
+    if (numberOfTickets) {
+        var paymentOption = prompt("Please select a payment option:\n1. Pay with GCash\n2. Pay with Card");
+        if (paymentOption === "1") {
+            payWithGCash(movieTitle, price, numberOfTickets);
+        } else if (paymentOption === "2") {
+            payWithCard(movieTitle, price, numberOfTickets);
+        } else {
+            alert("Invalid payment option. Reservation canceled.");
+        }
+    } else {
+        alert("Reservation canceled.");
+    }
+}
+
+function payWithGCash(movieTitle, price, numberOfTickets) {
+    var gcashPayment = prompt("Please pay " + (price * numberOfTickets) + " pesos via GCash. Enter 'done' when completed.");
+    if (gcashPayment && gcashPayment.toLowerCase() === "done") {
+        var referenceNumber = prompt("Please enter the reference number provided by GCash (up to 13 characters):");
+        if (referenceNumber) {
+            if (referenceNumber.length <= 13) {
+                alert("You have reserved " + numberOfTickets + " tickets for " + movieTitle + " with reference number " + referenceNumber + ". Thank you for your payment!");
+            } else {
+                alert("Reference number should not exceed 13 characters. Reservation canceled.");
+            }
+        } else {
+            alert("Invalid reference number. Reservation canceled.");
+        }
+    } else {
+        alert("Invalid payment. Reservation canceled.");
+    }
+}
+
+function payWithCard(movieTitle, price, numberOfTickets) {
+    var cardNumber = prompt("Please enter your card number:");
+    if (cardNumber) {
+        alert("Your card ending with " + cardNumber.slice(-4) + " will be charged " + (price * numberOfTickets) + " pesos for " + numberOfTickets + " tickets for " + movieTitle + ". Thank you for your payment!");
+    } else {
+        alert("Invalid card number. Reservation canceled.");
+    }
+}
+
+function goBack() {
+    window.history.back();
+}
+</script>
+</head>
+<body>
+
+<h1>Movie Packages</h1>
+
+<div class="row">
+    <div class="column">
+        <div class="moviePackage">
+            <h2 class="movieTitle">Antigang</h2>
+            <img src="antigang_poster.jpg" alt="Antigang Poster" width="200">
+            <p class="movieDetails">Price: 150 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Antigang', 150)">Reserve Tickets</button>
+            </div>
+        </div>
+        
+        <div class="moviePackage">
+            <h2 class="movieTitle">Ghostbusters</h2>
+            <img src="ghostbusters_poster.jpg" alt="Ghostbusters Poster" width="200">
+            <p class="movieDetails">Price: 170 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Ghostbusters', 170)">Reserve Tickets</button>
+            </div>
+        </div>
+
+        <div class="moviePackage">
+            <h2 class="movieTitle">Kung Fu Panda 4</h2>
+            <img src="kungfupanda4_poster.jpg" alt="Kung Fu Panda Poster" width="200">
+            <p class="movieDetails">Price: 160 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Kung Fu Panda', 160)">Reserve Tickets</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="column">
+        <div class="moviePackage">
+            <h2 class="movieTitle">Bad Guys</h2>
+            <img src="badguys_poster.jpg" alt="Bad Guys Poster" width="200">
+            <p class="movieDetails">Price: 200 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Bad Guys', 200)">Reserve Tickets</button>
+            </div>
+        </div>
+        
+        <div class="moviePackage">
+            <h2 class="movieTitle">Godzilla</h2>
+            <img src="godzilla_poster.jpg" alt="Godzilla Poster" width="200">
+            <p class="movieDetails">Price: 220 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Godzilla', 220)">Reserve Tickets</button>
+            </div>
+        </div>
+
+        <div class="moviePackage">
+            <h2 class="movieTitle">Inside Out 2</h2>
+            <img src="insideout2_poster.jpg" alt="Inside Out 2 Poster" width="200">
+            <p class="movieDetails">Price: 210 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Inside Out 2', 210)">Reserve Tickets</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="column">
+        <div class="moviePackage">
+            <h2 class="movieTitle">Beekeeper</h2>
+            <img src="beekeeper_poster.jpg" alt="Beekeeper Poster" width="200">
+            <p class="movieDetails">Price: 180 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Beekeeper', 180)">Reserve Tickets</button>
+            </div>
+        </div>
+        
+        <div class="moviePackage">
+            <h2 class="movieTitle">Jailer</h2>
+            <img src="jailer_poster.jpg" alt="Jailer Poster" width="200">
+            <p class="movieDetails">Price: 190 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Jailer', 190)">Reserve Tickets</button>
+            </div>
+        </div>
+
+        <div class="moviePackage">
+            <h2 class="movieTitle">Oppenheimer</h2>
+            <img src="oppenheimer_poster.jpg" alt="Oppenheimer Poster" width="200">
+            <p class="movieDetails">Price: 230 pesos per head</p>
+            <p class="movieDetails">Includes: 1 Mega Popcorn, 1 Large Drink</p>
+            <div class="buttonContainer">
+                <button onclick="reserveTickets('Oppenheimer', 230)">Reserve Tickets</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="FirstPageHTML.html"><button id="backButton" onclick="goBack()">Back</button></a>
+
+</body>
+</html>
+
+

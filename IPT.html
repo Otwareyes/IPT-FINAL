@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Form</title>
+<link rel="stylesheet" href="hehe.css">
+</head>
+
+
+<body>
+<form id="myForm">
+<h1>Simple form Validation</h1>
+  <div class="input-control">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" required>
+    <span id="firstNameError" class="error"></span>
+  </div>
+  <div class="input-control">
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" required>
+    <span id="lastNameError" class="error"></span>
+  </div>
+  <div class="input-control">
+    <label for="birthdate">Birthdate:</label>
+    <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" required>
+    <span id="birthdateError" class="error"></span>
+  </div>
+  <div class="input-control">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <span id="emailError" class="error"></span>
+  </div>
+    <div class="input-control">
+    <label for="confirmEmail">Confirm Email:</label>
+    <input type="email" id="confirmEmail" name="confirmEmail" required>
+    <span id="confirmEmailError" class="error"></span>
+  </div>
+  <div class="input-control">
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <span id="passwordError" class="error"></span>
+  </div>
+  <div class="input-control">
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required>
+    <span id="confirmPasswordError" class="error"></span>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const form = document.getElementById('myForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    if (validateForm()) {
+      form.classList.add('accepted');
+      alert("Form successfully submitted!");
+    }
+  });
+  
+
+  function validateForm() {
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const birthdate = document.getElementById('birthdate').value;
+    const email = document.getElementById('email').value;
+    const confirmEmail = document.getElementById('confirmEmail').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    let isValid = true;
+
+    if (!/^[a-zA-Z.]*$/.test(firstName)) {
+      document.getElementById('firstNameError').innerText = "First Name must contain only letters and periods.";
+      isValid = false;
+     
+    } else {
+      document.getElementById('firstNameError').innerText = "";
+    }
+
+    if (!/^[a-zA-Z]*$/.test(lastName)) {
+      document.getElementById('lastNameError').innerText = "Last Name must contain only letters.";
+      isValid = false;
+    } else {
+      document.getElementById('lastNameError').innerText = "";
+    }
+
+    if (!/^\d{4}([-/])\d{2}\1\d{2}$/.test(birthdate)) {
+      document.getElementById('birthdateError').innerText = "Birthdate must be in YYYY-MM-DD format.";
+      isValid = false;
+    } else {
+      document.getElementById('birthdateError').innerText = "";
+      form.classList.add('accepted');
+    }
+
+    if (!emailRegex.test(email)) {
+      document.getElementById('emailError').innerText = "Invalid email format.";
+      isValid = false;
+    } else {
+      document.getElementById('emailError').innerText = "";
+    }
+
+    if (email !== confirmEmail) {
+      document.getElementById('confirmEmailError').innerText = "Emails do not match.";
+      isValid = false;
+    } else {
+      document.getElementById('confirmEmailError').innerText = "";
+    }
+
+    if (password.length < 8) {
+      document.getElementById('passwordError').innerText = "Password must be at least 8 characters long.";
+      isValid = false;
+    } else {
+      document.getElementById('passwordError').innerText = "";
+    }
+
+    if (password !== confirmPassword) {
+      document.getElementById('confirmPasswordError').innerText = "Passwords do not match.";
+      isValid = false;
+    } else {
+      document.getElementById('confirmPasswordError').innerText = "";
+    }
+
+    return isValid;
+  }
+</script>
+</body>
+</html>
